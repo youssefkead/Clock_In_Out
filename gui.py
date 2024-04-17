@@ -1,14 +1,18 @@
-from tkinter import *
+import tkinter as tk
 from tkinter import ttk
-root = Tk()
+
+root = tk.Tk()
 frm = ttk.Frame(root, padding=10)
 frm.grid()
-ttk.Label(frm, text="Hello World!").grid(column=0, row=0)
-ttk.Button(frm, text="Quit", command=root.destroy).grid(column=1, row=0)
+label1 = ttk.Label(frm, text="Hello World!")
+button1 = ttk.Button(frm, text="Quit", command=root.destroy)
 
-entry1 = Entry()
+label1.grid(column=0, row=0)
+button1.grid(column=1, row=0)
+
+entry1 = tk.Entry()
 entry1.grid()
-contents = StringVar()
+contents = tk.StringVar()
 contents.set("This is a variable")
 entry1["textvariable"] = contents
 
