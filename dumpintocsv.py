@@ -21,7 +21,10 @@ def print_contents(event):
 
 entry1.bind('<Key-Return>', print_contents)
 
-button2 = ttk.Button(frm,text="Submit",command=print_contents, padding=10)
+def print_it(event):
+    print("Works!")
+
+button2 = ttk.Button(frm,text="Submit",command=print_it, padding=10)
 button2.grid(column=1, row=5, pady=10)
 
 root.grid_rowconfigure(0, weight=1)
