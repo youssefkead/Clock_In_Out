@@ -23,6 +23,7 @@ def counter_label(label):
             global start_time
             global elapsed_time
             global time_at_stop
+            global start_time_label
             counter = datetime.now()
             # To manage the initial delay.
             elapsed_time = counter - start_time + time_at_stop
@@ -30,7 +31,7 @@ def counter_label(label):
             display = elapsed_time
 
             label['text']=display   # Or label.config(text=display)
-
+            start_time_label['text']=start_time.strftime("%H:%M:%S")
             # label.after(arg1, arg2) delays by
             # first argument given in milliseconds
             # and then calls the function given as second argument.
@@ -96,17 +97,23 @@ root.grid_columnconfigure(2, weight=1)
 root.grid_rowconfigure(0, weight=1)
 root.grid_rowconfigure(2, weight=1)
 
+mainframe.grid_columnconfigure(0, weight=1)
+mainframe.grid_columnconfigure(2, weight=1)
+mainframe.grid_rowconfigure(0, weight=1)
+mainframe.grid_rowconfigure(4, weight=1)
+
 start_time_label = ttk.Label(mainframe, text=datetime.strftime(start_time,"%H:%M:%S"))
+start_time_label.grid(row=1,column=1)
 # Fixing the window size. 
 root.minsize(width=250, height=70) 
 label = ttk.Label(mainframe, text="Welcome!", foreground="black", font="Verdana 30 bold") 
-label.pack() 
+label.grid(row=2,column=1) 
 f = ttk.Frame(mainframe)
 start = ttk.Button(f, text='Start', width=6, command=lambda:Start(label)) 
 stop = ttk.Button(f, text='Stop',width=6,state='disabled', command=Stop) 
 reset = ttk.Button(f, text='Reset',width=6, state='disabled', command=lambda:Reset(label)) 
-f.pack(anchor = 'center',pady=5)
-start.pack(side="left") 
-stop.pack(side ="left") 
-reset.pack(side="left") 
+f.grid(row=3,column=1,pady=5)
+start.grid(column=0,row=0) 
+stop.grid(column=1,row=0) 
+reset.grid(column=2,row=0) 
 root.mainloop()
