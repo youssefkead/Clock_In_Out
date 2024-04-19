@@ -2,18 +2,31 @@
 # using Tkinter 
 #importing the required libraries 
 import tkinter as Tkinter 
-from datetime import datetime
-counter = 0
+from datetime import datetime, timedelta
+import time
+
+s = time.strftime("%r, %T ", time.gmtime())
+#global variables
+counter = datetime.now()
+start_time = datetime.now()
+elapsed_time = counter - start_time
+time_at_stop = timedelta()
+#time_at_stop = datetime.strptime("00:00:00","%H:%M:%S")
+
 running = False
+
 def counter_label(label):
     def count():
         if running:
             global counter
-
+            global start_time
+            global elapsed_time
+            global time_at_stop
+            counter = datetime.now()
             # To manage the initial delay.
-            tt = datetime.fromtimestamp(counter)
-            string = tt.strftime("%H:%M:%S")
-            display=string
+            elapsed_time = counter - start_time + time_at_stop
+            elapsed_time = elapsed_time - timedelta(microseconds=elapsed_time.microseconds)
+            display = elapsed_time
 
             label['text']=display   # Or label.config(text=display)
 
@@ -23,15 +36,21 @@ def counter_label(label):
             # Generally like here we need to call the
             # function in which it is present repeatedly.
             # Delays by 1000ms=1 seconds and call count again.
-            label.after(1000, count)
-            counter += 1
+            label.after(500, count)
+            
    
     # Triggering the start of the counter. 
     count()
 
 # start function of the stopwatch 
 def Start(label): 
-    global running 
+    global running
+    global start_time
+    global counter
+    global time_at_stop
+
+    start_time = datetime.now()
+    counter = start_time + time_at_stop
     running=True
     counter_label(label) 
     start['state']='disabled'
@@ -40,7 +59,11 @@ def Start(label):
 
 # Stop function of the stopwatch 
 def Stop(): 
-    global running 
+    global running
+    global elapsed_time
+    global time_at_stop
+    time_at_stop = elapsed_time
+
     start['state']='normal'
     stop['state']='disabled'
     reset['state']='normal'
@@ -48,9 +71,12 @@ def Stop():
 
 # Reset function of the stopwatch 
 def Reset(label): 
-    global counter 
-    counter=0
-   
+    global counter
+    global start_time
+    global time_at_stop
+    start_time = datetime.now()
+    counter = datetime.now()
+    time_at_stop = timedelta()
     # If rest is pressed after pressing stop. 
     if running==False:       
         reset['state']='disabled'
@@ -58,7 +84,7 @@ def Reset(label):
    
     # If reset is pressed while the stopwatch is running. 
     else:                
-        label['text']=datetime.fromtimestamp(counter).strftime("%H:%M:%S")
+        label['text']= datetime.now() - datetime.now()
    
 root = Tkinter.Tk() 
 root.title("Stopwatch") 
