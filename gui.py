@@ -2,6 +2,7 @@
 # using Tkinter 
 #importing the required libraries 
 import tkinter as Tkinter 
+from tkinter import ttk
 from datetime import datetime, timedelta
 import time
 
@@ -88,15 +89,22 @@ def Reset(label):
    
 root = Tkinter.Tk() 
 root.title("Stopwatch") 
-   
+mainframe = ttk.Frame(root)
+mainframe.grid(row=1,column=1)
+root.grid_columnconfigure(0, weight=1)
+root.grid_columnconfigure(2, weight=1)
+root.grid_rowconfigure(0, weight=1)
+root.grid_rowconfigure(2, weight=1)
+
+start_time_label = ttk.Label(mainframe, text=datetime.strftime(start_time,"%H:%M:%S"))
 # Fixing the window size. 
 root.minsize(width=250, height=70) 
-label = Tkinter.Label(root, text="Welcome!", fg="black", font="Verdana 30 bold") 
+label = ttk.Label(mainframe, text="Welcome!", foreground="black", font="Verdana 30 bold") 
 label.pack() 
-f = Tkinter.Frame(root)
-start = Tkinter.Button(f, text='Start', width=6, command=lambda:Start(label)) 
-stop = Tkinter.Button(f, text='Stop',width=6,state='disabled', command=Stop) 
-reset = Tkinter.Button(f, text='Reset',width=6, state='disabled', command=lambda:Reset(label)) 
+f = ttk.Frame(mainframe)
+start = ttk.Button(f, text='Start', width=6, command=lambda:Start(label)) 
+stop = ttk.Button(f, text='Stop',width=6,state='disabled', command=Stop) 
+reset = ttk.Button(f, text='Reset',width=6, state='disabled', command=lambda:Reset(label)) 
 f.pack(anchor = 'center',pady=5)
 start.pack(side="left") 
 stop.pack(side ="left") 

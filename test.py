@@ -1,42 +1,34 @@
 import tkinter as tk
 from tkinter import ttk
 
-class App(tk.Frame):
-    def __init__(self, master):
-        super().__init__(master)
-        self.grid()
-
-        self.entrythingy = tk.Entry()
-        self.entrythingy.grid(row=1,column=1)
-
-        self.grid_rowconfigure(0, weight=1)
-        self.grid_rowconfigure(2, weight=1)
-        self.grid_columnconfigure(0, weight=1)
-        self.grid_columnconfigure(2, weight=1)
-
-        # Create the application variable.
-        self.contents = tk.StringVar()
-        # Set it to some value.
-        self.contents.set("this is a variable")
-        # Tell the entry widget to watch this variable.
-        self.entrythingy["textvariable"] = self.contents
-
-        # Define a callback for when the user hits return.
-        # It prints the current value of the variable.
-        self.entrythingy.bind('<Key-Return>',
-                             self.print_contents)
-
-    def print_contents(self, event):
-        print("Hi. The current entry content is:",
-              self.contents.get())
-
+# root window
 root = tk.Tk()
-myapp = App(root)
-myapp.grid(sticky="nsew")
-root.grid_rowconfigure(0, weight=1)
-root.grid_columnconfigure(0, weight=1)
-root.grid_rowconfigure(2, weight=1)
-root.grid_columnconfigure(2, weight=1)
-myapp.mainloop()
+root.geometry("240x100")
+root.title('Login')
+root.resizable(0, 0)
 
-# new comment!
+# configure the grid
+root.columnconfigure(0, weight=1)
+root.columnconfigure(1, weight=3)
+
+
+# username
+username_label = ttk.Label(root, text="Username:")
+username_label.grid(column=0, row=0, sticky=tk.W, padx=5, pady=5)
+
+username_entry = ttk.Entry(root)
+username_entry.grid(column=1, row=0, sticky=tk.E, padx=5, pady=5)
+
+# password
+password_label = ttk.Label(root, text="Password:")
+password_label.grid(column=0, row=1, sticky=tk.W, padx=5, pady=5)
+
+password_entry = ttk.Entry(root,  show="*")
+password_entry.grid(column=1, row=1, sticky=tk.E, padx=5, pady=5)
+
+# login button
+login_button = ttk.Button(root, text="Login")
+login_button.grid(column=1, row=3, sticky=tk.E, padx=5, pady=5)
+
+
+root.mainloop()
